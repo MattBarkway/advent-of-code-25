@@ -1,4 +1,4 @@
-use crate::utils::part::Part;
+use crate::utils::models::Part;
 use anyhow::Result;
 pub trait AdventDay {
     fn part_1(&self) -> Result<()>;
