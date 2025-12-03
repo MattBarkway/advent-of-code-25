@@ -35,13 +35,10 @@ impl AdventDay for DayThree {
     }
 }
 
-fn get_max_char(val: &str) -> Result<(u32, usize)>
-{
+fn get_max_char(val: &str) -> Result<(u32, usize)> {
     val.chars()
         .enumerate()
-        .filter_map(|(idx, c)| {
-            c.to_digit(10).map(|d| (d, idx))
-        })
+        .filter_map(|(idx, c)| c.to_digit(10).map(|d| (d, idx)))
         .max_by(|(d_a, idx_a), (d_b, idx_b)| match d_a.cmp(d_b) {
             Ordering::Greater => Ordering::Greater,
             Ordering::Less => Ordering::Less,
