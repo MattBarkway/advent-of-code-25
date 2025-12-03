@@ -1,13 +1,13 @@
 use crate::days::day_1::errors::{ParseDirectionError, ParseMoveError};
 use crate::utils::advent_day::AdventDay;
-use crate::utils::errors::RunError;
 use crate::utils::load::load_from_file;
+use anyhow::Result;
 use std::str::FromStr;
 
 pub struct DayOne;
 
 impl AdventDay for DayOne {
-    fn part_1(&self) -> Result<(), RunError> {
+    fn part_1(&self) -> Result<()> {
         tracing::info!("Day 1: Part 1");
         let raw_moves = load_from_file("inputs/day_1/part1.txt")?;
         let cracker = SafeCracker::from_raw_inputs(50, raw_moves, 100)?;
@@ -16,7 +16,7 @@ impl AdventDay for DayOne {
         Ok(())
     }
 
-    fn part_2(&self) -> Result<(), RunError> {
+    fn part_2(&self) -> Result<()> {
         println!("Day 1: Part 2");
         let raw_moves = load_from_file("inputs/day_1/part1.txt")?;
         let cracker = SafeCracker::from_raw_inputs(50, raw_moves, 100)?;
