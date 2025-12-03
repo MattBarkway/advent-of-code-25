@@ -16,6 +16,7 @@ impl std::error::Error for ParseDayError {}
 pub enum Day {
     Day1,
     Day2,
+    Day3,
 }
 
 impl FromStr for Day {
@@ -27,16 +28,8 @@ impl FromStr for Day {
         match lower_s.as_str() {
             "1" | "day1" | "day 1" => Ok(Day::Day1),
             "2" | "day2" | "day 2" => Ok(Day::Day2),
+            "3" | "day3" | "day 3" => Ok(Day::Day3),
             _ => Err(ParseDayError),
-        }
-    }
-}
-
-impl fmt::Display for Day {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            Day::Day1 => write!(f, "1"),
-            Day::Day2 => write!(f, "2"),
         }
     }
 }

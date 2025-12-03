@@ -3,6 +3,7 @@ mod utils;
 
 use crate::days::day_1::run::DayOne;
 use crate::days::day_2::run::DayTwo;
+use crate::days::day_3::run::DayThree;
 use crate::utils::advent_day::AdventDay;
 use crate::utils::day::Day;
 use crate::utils::part::Part;
@@ -30,6 +31,7 @@ fn main() -> Result<()> {
     match &cli.day {
         Day::Day1 => DayOne.run(cli.part)?,
         Day::Day2 => DayTwo.run(cli.part)?,
+        Day::Day3 => DayThree.run(cli.part)?,
     }
     Ok(())
 }
