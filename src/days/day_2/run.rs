@@ -17,7 +17,6 @@ pub fn get_products() -> Result<Vec<ProductRange>> {
 
 impl AdventDay for DayTwo {
     fn part_1(&self) -> Result<()> {
-        // 28146997880
         tracing::info!("Day 2: Part 1");
         let sum: u64 = get_products()?
             .iter()
@@ -28,7 +27,6 @@ impl AdventDay for DayTwo {
     }
 
     fn part_2(&self) -> Result<()> {
-        // 40028128307
         tracing::info!("Day 2: Part 2");
         let sum: u64 = get_products()?
             .iter()
