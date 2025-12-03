@@ -2,10 +2,11 @@ mod days;
 mod utils;
 
 use crate::days::day_1::run::DayOne;
+use crate::days::day_2::run::DayTwo;
 use crate::utils::advent_day::AdventDay;
 use crate::utils::day::Day;
-use crate::utils::errors::RunError;
 use crate::utils::part::Part;
+use anyhow::Result;
 use clap::Parser;
 use tracing_subscriber::FmtSubscriber;
 
@@ -21,14 +22,14 @@ struct Cli {
     part: Part,
 }
 
-fn main() -> Result<(), RunError> {
+fn main() -> Result<()> {
     FmtSubscriber::builder().init();
 
     let cli = Cli::parse();
 
     match &cli.day {
         Day::Day1 => DayOne.run(cli.part)?,
-        Day::Day2 => {}
+        Day::Day2 => DayTwo.run(cli.part)?,
     }
     Ok(())
 }
