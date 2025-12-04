@@ -11,3 +11,7 @@ pub fn load_from_file(path: &str) -> Result<Vec<String>, io::Error> {
 
     Ok(lines)
 }
+
+pub fn raw_load_from_file(path: &str) -> Result<String, io::Error> {
+    Ok(fs::read_to_string(path)?.trim().to_string())
+}
