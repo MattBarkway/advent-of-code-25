@@ -9,3 +9,4 @@ tracing = "0.1.43"
 tracing-subscriber = { version = "0.3.22", features = ["fmt"] }
 anyhow = "1.0.100"
 thiserror = "2.0.17"
+itertools = "0.14.0"

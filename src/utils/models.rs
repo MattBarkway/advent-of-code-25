@@ -6,6 +6,8 @@ pub enum Day {
     Day2,
     #[clap(alias = "3")]
     Day3,
+    #[clap(alias = "4")]
+    Day4,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, clap::ValueEnum)]
