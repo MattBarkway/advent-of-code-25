@@ -6,6 +6,7 @@ use crate::days::day_2::run::DayTwo;
 use crate::days::day_3::run::DayThree;
 use crate::days::day_4::run::DayFour;
 use crate::days::day_5::run::DayFive;
+use crate::days::day_6::run::DaySix;
 use crate::utils::advent_day::AdventDay;
 use crate::utils::models::{Day, Part};
 use anyhow::Result;
@@ -35,6 +36,7 @@ fn main() -> Result<()> {
         Day::Day3 => DayThree.run(cli.part)?,
         Day::Day4 => DayFour.run(cli.part)?,
         Day::Day5 => DayFive.run(cli.part)?,
+        Day::Day6 => DaySix.run(cli.part)?,
     }
     Ok(())
 }

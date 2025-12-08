@@ -1,5 +1,6 @@
 use crate::days::day_4::errors::ParseGridError;
 use crate::utils::advent_day::AdventDay;
+use crate::utils::grid::Grid;
 use crate::utils::load::raw_load_from_file;
 use anyhow::Result;
 use itertools::Itertools;
@@ -30,53 +31,10 @@ impl AdventDay for DayFour {
     }
 }
 
-#[derive(Clone)]
-struct Grid {
-    width: usize,
-    plan: Vec<Vec<char>>,
-}
+impl FromStr for Grid<char> {
+    type Err = crate::utils::grid::ParseGridError;
 
-impl Grid {
-    pub fn get(&self, x: usize, y: usize) -> char {
-        self.plan[y][x]
-    }
-
-    pub fn iter(&self) -> Iter<'_, Vec<char>> {
-        self.plan.iter()
-    }
-
-    pub fn remove(&mut self, x: usize, y: usize) {
-        self.plan[y][x] = 'x'
-    }
-
-    fn neighbour_coords(&self, x: usize, y: usize) -> Vec<(usize, usize)> {
-        (-1..2)
-            .cartesian_product(-1..2)
-            .filter(|(x, y)| !(x == &0 && y == &0))
-            .filter_map(|(dx, dy)| {
-                let nx = x.checked_add_signed(dx)?;
-                let ny = y.checked_add_signed(dy)?;
-                if nx < self.width && ny < self.plan.len() {
-                    Some((nx, ny))
-                } else {
-                    None
-                }
-            })
-            .collect()
-    }
-
-    pub fn neighbours(&self, x: usize, y: usize) -> Vec<char> {
-        self.neighbour_coords(x, y)
-            .iter()
-            .map(|&(x, y)| self.get(x, y))
-            .collect()
-    }
-}
-
-impl FromStr for Grid {
-    type Err = ParseGridError;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
+    fn from_str(s: &str) -> anyhow::Result<Self, Self::Err> {
         let plan: Vec<Vec<char>> = s
             .split_whitespace()
             .filter(|s| !s.is_empty())
@@ -84,7 +42,16 @@ impl FromStr for Grid {
             .map(|s| s.chars().collect())
             .collect();
         let width = plan[0].len();
-        Ok(Grid { plan, width })
+        Ok(Grid {
+            values: plan,
+            width,
+        })
+    }
+}
+
+impl Grid<char> {
+    pub fn remove(&mut self, x: usize, y: usize) {
+        self.values[y][x] = 'x'
     }
 }
 
@@ -92,7 +59,7 @@ fn count_of_char(chars: Vec<char>, c: char) -> usize {
     chars.iter().filter(|&&x| x == c).count()
 }
 
-fn find_paper(plan: Grid) -> Result<i32> {
+fn find_paper(plan: Grid<char>) -> Result<i32> {
     let mut valid_count = 0;
 
     for (y_idx, row) in plan.iter().enumerate() {
@@ -108,7 +75,7 @@ fn find_paper(plan: Grid) -> Result<i32> {
     Ok(valid_count)
 }
 
-fn find_and_remove_paper(mut plan: Grid) -> Result<i32> {
+fn find_and_remove_paper(mut plan: Grid<char>) -> Result<i32> {
     let mut prev_count: i32 = 0;
     let mut valid_count = 0;
     let mut flag = true;
