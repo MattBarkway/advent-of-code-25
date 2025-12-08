@@ -17,7 +17,7 @@ impl AdventDay for DayFive {
         tracing::info!("Day 5: Part 2");
         let input = raw_load_from_file("inputs/day_5/part1.txt")?;
         let count = count_all_possible_fresh(&input)?;
-        tracing::info!("Found {} valid paper", count);
+        tracing::info!("Found {} fresh ingredients", count);
         Ok(())
     }
 }
