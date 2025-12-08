@@ -13,7 +13,4 @@ pub enum ParseMoveError {
     /// Error when the number fails to parse
     #[error("Step parsing failed: {0}")]
     InvalidSteps(#[from] ParseIntError),
-    /// Error if the string is empty or not in the expected format
-    #[error("Move string must be in the format 'D#' (e.g., L99)")]
-    InvalidFormat,
 }
