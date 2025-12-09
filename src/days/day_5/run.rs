@@ -76,7 +76,7 @@ fn parse_available(raw_available: &str) -> Result<Vec<i64>> {
         .lines()
         .map(|line| {
             line.parse::<i64>()
-                .map_err(|e| anyhow!("Invalid ingredient"))
+                .map_err(|_| anyhow!("Invalid ingredient"))
         })
         .collect::<Result<_>>()
 }

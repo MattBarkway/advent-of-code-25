@@ -1,10 +1,7 @@
-use crate::days::day_4::errors::ParseGridError;
 use crate::utils::advent_day::AdventDay;
 use crate::utils::grid::Grid;
 use crate::utils::load::raw_load_from_file;
 use anyhow::Result;
-use itertools::Itertools;
-use std::slice::Iter;
 use std::str::FromStr;
 
 pub struct DayFour;
