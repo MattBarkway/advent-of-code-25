@@ -10,7 +10,6 @@ pub struct DayEight;
 
 impl AdventDay for DayEight {
     fn part_1(&self) -> Result<()> {
-        // 115885
         tracing::info!("Day 8: Part 1");
         let input = load_from_file("inputs/day_8/part1.txt")?;
         let product = build_circuits(input, 1000)?;
@@ -19,7 +18,6 @@ impl AdventDay for DayEight {
     }
 
     fn part_2(&self) -> Result<()> {
-        // 274150525
         tracing::info!("Day 8: Part 2");
         let input = load_from_file("inputs/day_8/part1.txt")?;
         let count = build_circuits_pt2(input)?;
