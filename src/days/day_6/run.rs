@@ -1,9 +1,9 @@
 use crate::utils::advent_day::AdventDay;
 use crate::utils::grid::{Grid, ParseGridError};
 use crate::utils::load::raw_load_from_file;
-use anyhow::{Result};
+use anyhow::Result;
 use itertools::Itertools;
-use std::str::{FromStr};
+use std::str::FromStr;
 use thiserror::Error;
 
 pub struct DaySix;
