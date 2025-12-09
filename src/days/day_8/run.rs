@@ -1,10 +1,10 @@
 use crate::utils::advent_day::AdventDay;
+use crate::utils::coordinates::{Coordinate3D, Distance};
 use crate::utils::load::load_from_file;
 use anyhow::{anyhow, Result};
 use itertools::Itertools;
 use std::collections::HashSet;
 use std::fmt::Debug;
-use thiserror::Error;
 
 pub struct DayEight;
 
@@ -26,55 +26,17 @@ impl AdventDay for DayEight {
     }
 }
 
-#[derive(Debug, Error, Clone)]
-#[error("Invalid coordinate. should be a string of 3 numbers separated by commas: 'x,y,z'")]
-pub struct ParseCoordinateError;
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-struct Coordinate {
-    x: i64,
-    y: i64,
-    z: i64,
-}
-
-impl TryFrom<&String> for Coordinate {
-    type Error = ParseCoordinateError;
-
-    fn try_from(value: &String) -> std::result::Result<Self, Self::Error> {
-        let split: Vec<i64> = value
-            .split(',')
-            .map(|i| Ok(i.parse::<i64>().map_err(|_| ParseCoordinateError))?)
-            .collect::<Result<Vec<_>, _>>()?;
-        if split.len() != 3 {
-            return Err(ParseCoordinateError);
-        }
-        Ok(Self {
-            x: split[0],
-            y: split[1],
-            z: split[2],
-        })
-    }
-}
-
-impl Coordinate {
-    pub fn distance_to(&self, other: Coordinate) -> f64 {
-        (((self.x - other.x).pow(2) + (self.y - other.y).pow(2) + (self.z - other.z).pow(2)).abs()
-            as f64)
-            .sqrt()
-    }
-}
-
 #[derive(Debug, Clone, PartialEq, Eq)]
 struct Circuit {
-    coords: HashSet<Coordinate>,
+    coords: HashSet<Coordinate3D>,
 }
 
 impl Circuit {
-    fn includes(&self, coord: Coordinate) -> bool {
+    fn includes(&self, coord: Coordinate3D) -> bool {
         self.coords.contains(&coord)
     }
 
-    fn add(&mut self, coord: Coordinate) {
+    fn add(&mut self, coord: Coordinate3D) {
         self.coords.insert(coord);
     }
 
@@ -83,7 +45,7 @@ impl Circuit {
     }
 }
 
-fn get_sorted_pairs(coords: &[Coordinate]) -> Vec<(f64, Coordinate, Coordinate)> {
+fn get_sorted_pairs(coords: &[Coordinate3D]) -> Vec<(f64, Coordinate3D, Coordinate3D)> {
     let mut sorted_pairs = coords
         .iter()
         .tuple_combinations()
@@ -105,7 +67,7 @@ fn build_circuits(input: Vec<String>, n: usize) -> Result<i64> {
     let mut circuits: Vec<Circuit> = vec![];
     let coords = input
         .iter()
-        .map(Coordinate::try_from)
+        .map(Coordinate3D::try_from)
         .collect::<Result<Vec<_>, _>>()?;
     let sorted_pairs = get_sorted_pairs(&coords);
     for (_, a, b) in sorted_pairs.iter().take(n) {
@@ -143,7 +105,7 @@ fn build_circuits(input: Vec<String>, n: usize) -> Result<i64> {
 fn build_circuits_pt2(input: Vec<String>) -> Result<i64> {
     let coords = input
         .iter()
-        .map(Coordinate::try_from)
+        .map(Coordinate3D::try_from)
         .collect::<Result<Vec<_>, _>>()?;
     let mut circuits: Vec<Circuit> = coords
         .iter()
